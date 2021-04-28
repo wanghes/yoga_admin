@@ -17,12 +17,16 @@ class ManageVenuesService {
         $field=[
             'admin_user_id',
             'nickname', 
-            'username', 
+            'name', 
+            'venues_id',
             'is_disable',
             'avatar',
+            'init_password',
             'is_delete',
             'login_type',
-            'create_time'
+            'create_time',
+            'login_time',
+            'phone'
         ];
         $list = Db::name('admin_user')
             ->field($field)
@@ -37,6 +41,7 @@ class ManageVenuesService {
 
     public static function add($params) {
         $data['phone'] = $params['phone'];
+        $data['name'] = $params['name'];
         $data['login_type'] = 1;
         $uuid = Random::uuid();
         $data['admin_user_id'] = $uuid;

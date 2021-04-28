@@ -8,8 +8,10 @@ use app\common\cache\AdminUserCache;
 use app\service\TokenService;
 
 
-class AdminService {
-    public static function addAdmin() {
+class AdminService
+{
+    public static function addAdmin()
+    {
         $data['name'] = "管理员";
         $data['nickname'] = "管理员";
         $data['login_type'] = 0;
@@ -17,11 +19,11 @@ class AdminService {
         $data['admin_user_id'] = $uuid;
         // 设置默认的8位密码
         $data['init_password'] = getRandomString(8);
-        
+
         $data['password'] = md5($data['init_password']);
 
         $data['create_time'] = date('Y-m-d H:i:s');
-    
+
         $insertId = Db::name('admin_user')->strict(false)->insertGetId($data);
 
         return $insertId;
@@ -36,24 +38,41 @@ class AdminService {
     public static function info($admin_user_id)
     {
         $admin_user = AdminUserCache::get($admin_user_id);
-        
+
         if (empty($admin_user)) {
             // 管理员登录
-            $admin_user = Db::name('admin_user')
+            $admin_user = Db::table('admin_user')
                 ->where('admin_user_id', $admin_user_id)
                 ->find();
 
             if (empty($admin_user)) {
                 exception('用户不存在：' . $admin_user_id);
             }
-            
+
             $admin_user['admin_user_id'] = $admin_user_id;
             $admin_user['login_time'] = date('Y-m-d H:i:s');
-            $admin_user['role'] = 'admin'; 
-          
+            $admin_user['role'] = 'admin';
+
             $admin_user['admin_token'] = TokenService::create($admin_user);
             AdminUserCache::set($admin_user_id, $admin_user);
         }
+
+        return $admin_user;
+    }
+
+    public static function adminInfo($admin_user_id, $role)
+    {
+        $login_type = 0;
+        if ($role == "admin") {
+            $login_type = 0;
+        }
+
+        $admin_user = Db::name('admin_user')
+            ->where([
+                'admin_user_id' => $admin_user_id,
+                'login_type' => $login_type
+            ])->find();
+
 
         return $admin_user;
     }

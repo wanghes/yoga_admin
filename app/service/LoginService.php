@@ -53,7 +53,31 @@ class LoginService {
         $data['admin_user_id'] = $admin_user_id;
         $data["admin_token"] = $admin_user['admin_token'];
         $data['is_admin'] = true;
+        $data['role'] = "admin";
     
         return $data;
+    }
+
+
+     /**
+     * 退出
+     *
+     * @param integer $admin_user_id 用户id
+     * 
+     * @return array
+     */
+    public static function logout($admin_user_id)
+    {
+        $update['logout_time'] = date('Y-m-d H:i:s');
+        
+        Db::table('admin_user')
+            ->where('admin_user_id', $admin_user_id)
+            ->update($update);
+
+        $update['admin_user_id'] = $admin_user_id;
+
+        AdminUserCache::del($admin_user_id);
+
+        return $update;
     }
 }

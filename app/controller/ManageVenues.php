@@ -10,6 +10,7 @@ class ManageVenues extends BaseController
     public function add()
     {
         $params['phone'] = Request::param('phone', ""); 
+        $params['name'] = Request::param('name', ""); 
         
         $insertId = ManageVenuesService::add($params);
         return success([
@@ -24,7 +25,7 @@ class ManageVenues extends BaseController
         return error("添加失败");
     }
 
-        /**
+    /**
      * login_type = 0 是系统管理员
      * login_type = 1 是场馆主管理员
      */

@@ -6,6 +6,7 @@ namespace app;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
+use thans\jwt\facade\JWTAuth;
 
 /**
  * 控制器基础类
@@ -36,6 +37,9 @@ abstract class BaseController
      */
     protected $middleware = [];
 
+    // 登录用户的 id
+    protected $admin_user_id;
+
     /**
      * 构造方法
      * @access public
@@ -45,7 +49,9 @@ abstract class BaseController
     {
         $this->app     = $app;
         $this->request = $this->app->request;
+        $payload = JWTAuth::auth();
 
+        $this->admin_user_id = $payload['admin_user_id']->getValue();
         // 控制器初始化
         $this->initialize();
     }

@@ -25,13 +25,12 @@ class AdminTokenVerify
         $api_white_list = Config::get('admin.api_white_list');
         // echo $menu_url;
         if (!in_array($menu_url, $api_white_list)) {
-            $admin_token = admin_token();
+            $admin_token = admin_token();   
+            $admin_user_id = admin_user_id();
 
             if (empty($admin_token)) {
-                exception('Requests Headers：AdminToken 必填', 401);
+                exception('Requests Headers：AdminToken 必填'.$admin_user_id, 401);
             }
-
-            $admin_user_id = admin_user_id();
 
             if (empty($admin_user_id)) {
                 exception('Requests Headers：AdminUserId 必填', 401);
