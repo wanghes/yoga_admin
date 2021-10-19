@@ -15,6 +15,7 @@ use Throwable;
  */
 class ExceptionHandle extends Handle
 {
+    public $httpStatus = 500;
     /**
      * 不需要记录信息（日志）的异常类列表
      * @var array
@@ -50,6 +51,9 @@ class ExceptionHandle extends Handle
      */
     public function render($request, Throwable $e): Response
     {
+        // 添加自定义异常处理机制
+
+        // 其他错误交给系统处理
         if (method_exists($e, "getStatusCode")) {
             $httpStatus = $e->getStatusCode();
         } else {
