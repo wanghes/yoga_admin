@@ -18,7 +18,7 @@ Route::get('/', 'Test/index');
 Route::post('/login', 'Login/login');
 Route::post('/logout', 'Login/logout');
 Route::post('/admin/add', 'Login/addAdmin');
-Route::post('/info', 'index/adminInfo');
+Route::post('/info', 'Index/adminInfo');
 
 
 // 场馆主
