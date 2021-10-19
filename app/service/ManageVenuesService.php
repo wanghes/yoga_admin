@@ -15,22 +15,23 @@ class ManageVenuesService {
     }
     public static function list($pageSize=10, $page=1, $where=[], $order='create_time desc') {
         $field=[
-            'admin_user_id',
+            'admin_user.admin_user_id as admin_user_id',
             'nickname', 
-            'name', 
+            'venues.name as name', 
             'venues_id',
             'is_disable',
             'avatar',
             'init_password',
             'is_delete',
             'login_type',
-            'create_time',
+            'admin_user.create_time as create_time',
             'login_time',
             'phone'
         ];
         $list = Db::name('admin_user')
             ->field($field)
             ->where($where)
+            ->leftJoin("venues", 'venues.admin_user_id=admin_user.admin_user_id')
             ->page($page)
             ->limit($pageSize)
             ->order($order)
