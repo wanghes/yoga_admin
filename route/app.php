@@ -25,6 +25,12 @@ Route::post('/info', 'Index/adminInfo');
 Route::post('/venues/add', 'ManageVenues/add');
 Route::get('/venues/list', 'ManageVenues/list');
 
+// 购买订单
+Route::post('/order/list', 'Order/list');
+
+
+
+
 // 线上课程分类管理
 Route::get('/online/cate/list', 'OnlineCate/list');
 Route::post('/online/cate/add', 'OnlineCate/addCate');
