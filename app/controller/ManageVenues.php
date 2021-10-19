@@ -32,9 +32,30 @@ class ManageVenues extends BaseController
     public function list() {
         $page = Request::param('page', 1); 
         $pageSize = Request::param('pageSize');
-    
+        $phone =  Request::param('phone', "");
+        $name =  Request::param('name', "");
+        $status =  Request::param('status', 0);
 
-        $where = ['login_type' => 1];
+        $where = ['login_type' => 1];   
+
+        if (!empty($phone)) {
+            $where['phone'] = $phone;
+        }
+
+        if (!empty($name)) {
+            $where['name'] = $name;
+        }
+
+        if ($status != 0) {
+            if ($status == 1) {
+                $where['is_disable'] = 0;
+                $where['is_delete'] = 0;
+            } else if ($status == 2) {
+                $where['is_disable'] = 1;
+            } else if ($status == 3) {
+                $where['is_delete'] = 1;
+            }
+        }
 
         $list = ManageVenuesService::list($pageSize, $page, $where);
         $total = ManageVenuesService::getTotal($where);
