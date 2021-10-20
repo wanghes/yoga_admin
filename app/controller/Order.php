@@ -10,8 +10,10 @@ class Order extends BaseController
     public function list() {
         $page = Request::param('page', 1); 
         $pageSize = Request::param('pageSize');
+
+        $where = ['sell_type' => 5];
         
-        $list = OrderService::list($pageSize, $page);
+        $list = OrderService::list($pageSize, $page, $where);
         $total = OrderService::getTotal();
 
         return success([
