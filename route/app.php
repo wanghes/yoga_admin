@@ -10,9 +10,7 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP6!';
-});
+Route::get('/MP_verify_I7RoycIxyPON61RR.txt', 'MP_verify_I7RoycIxyPON61RR/index');
 
 Route::get('/', 'Test/index');
 Route::post('/login', 'Login/login');
