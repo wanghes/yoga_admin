@@ -30,6 +30,11 @@ Route::post('/order/list', 'Order/list');
 
 
 
+// 微信
+Route::post('/wx/menu/create', 'Weixin/createMenu');
+Route::post('/wx/menu/get', 'Weixin/getMenu');
+
+
 
 // 线上课程分类管理
 Route::get('/online/cate/list', 'OnlineCate/list');

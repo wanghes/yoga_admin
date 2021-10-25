@@ -19,4 +19,6 @@ class Index extends BaseController
 
         return success($data);
     }
+
+    
 }
