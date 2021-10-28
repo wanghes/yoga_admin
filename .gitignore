@@ -4,3 +4,5 @@
 *.log
 .env
 composer.lock
+runtime
+weixinCache
