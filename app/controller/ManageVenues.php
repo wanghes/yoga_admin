@@ -66,4 +66,16 @@ class ManageVenues extends BaseController
             "currentPage"=>$page
         ], "获取成功");
     }
+
+    public function chartList() {
+        $start_date = Request::param('start_date', "");
+        $end_date = Request::param('end_date', "");
+
+        $where = ['login_type' => 1];
+        $date = [$start_date, $end_date];
+        
+        $list = ManageVenuesService::chartList($where, $date);
+
+        return success($list, "获取成功");
+    }
 }

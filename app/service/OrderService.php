@@ -35,4 +35,23 @@ class OrderService {
             ->toArray();
         return $list;
     }
+
+    public static function chartList($where=[], $date, $order='create_time asc') {
+        $field=[
+            'name', 
+            'out_trade_no',
+            'sum(total_fee) as money',
+            'weixin_prepayid',
+            "DATE_FORMAT(create_time, '%Y-%m-%d') as date"
+        ];
+        $list = Db::name('weixin_orders')
+            ->field($field)
+            ->where($where)
+            ->whereTime('create_time', 'between', $date)
+            ->order($order)
+            ->group('date')
+            ->select()
+            ->toArray();
+        return $list;
+    }
 }

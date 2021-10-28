@@ -21,4 +21,19 @@ class Order extends BaseController
             "total"=>$total
         ], "获取成功");
     }
+
+
+    public function chartList() {
+        $start_date = Request::param('start_date', "");
+        $end_date = Request::param('end_date', "");
+
+        $where = ['sell_type' => 5];
+        $date = [$start_date, $end_date];
+        
+        $list = OrderService::chartList($where, $date);
+
+        return success([
+            "list"=>$list
+        ], "获取成功");
+    }
 }

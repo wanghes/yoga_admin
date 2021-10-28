@@ -22,9 +22,11 @@ Route::post('/info', 'Index/adminInfo');
 // 场馆主
 Route::post('/venues/add', 'ManageVenues/add');
 Route::get('/venues/list', 'ManageVenues/list');
+Route::post('/venues/chartlist', 'ManageVenues/chartList');
 
 // 购买订单
 Route::post('/order/list', 'Order/list');
+Route::post('/bill/chartlist', 'Order/chartList');
 
 
 

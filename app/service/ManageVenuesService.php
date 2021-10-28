@@ -59,4 +59,21 @@ class ManageVenuesService {
         $insertId = Db::name('admin_user')->strict(false)->insertGetId($data);
         return $insertId;
     }
+
+
+    public static function chartList($where=[], $date, $order='create_time asc') {
+        $field=[
+            "count(DATE_FORMAT(create_time, '%Y-%m-%d')) as num",
+            "DATE_FORMAT(create_time, '%Y-%m-%d') as date"
+        ];
+        $list = Db::name('admin_user')
+            ->field($field)
+            ->where($where)
+            ->whereTime('create_time', 'between', $date)
+            ->order($order)
+            ->group('date')
+            ->select()
+            ->toArray();
+        return $list;
+    }
 }
