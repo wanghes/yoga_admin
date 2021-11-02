@@ -7,20 +7,24 @@ use app\service\OnlineCateService;
 class OnlineCate extends BaseController
 {
     public function list() {
-        $list = OnlineCateService::list();
+        $admin_user_id = $this->admin_user_id;
+        $where = ['admin_user_id' => $admin_user_id];
+        $list = OnlineCateService::list($where);
         return success($list, "获取成功");
     }
 
     public function query() {
+        $admin_user_id = $this->admin_user_id;
+        $where = ['admin_user_id' => $admin_user_id];
         $id = $this->request->param('id', '');
-        $obj = OnlineCateService::query($id);
+        $obj = OnlineCateService::query($id, $where);
         return success($obj, "获取成功");
     }
 
     public function addCate() {
         $param['name'] = $this->request->param('name', ''); // 分类名字
-        // validate(AdminCateValidate::class)->scene('cate_add')->check($param);
-
+        $admin_user_id = $this->admin_user_id;
+        $param['admin_user_id'] = $admin_user_id; 
         try {
             $insertId = OnlineCateService::addCate($param);
             if ($insertId) {
@@ -49,9 +53,6 @@ class OnlineCate extends BaseController
     public function renameCate() { 
         $param['id'] = $this->request->param('id', '');    // 分类id
         $param['name'] = $this->request->param('name', ''); // 分类名字
-
-        // validate(AdminCateValidate::class)->scene('cate_edit')->check($param);
-    
         try {
             $updateNum = OnlineCateService::renameCate($param);
             if ($updateNum != 0) {

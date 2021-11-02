@@ -8,17 +8,19 @@ use think\facade\Db;
 
 class OnlineCateService {
     // 查询
-    public static function list($order='id desc') {
+    public static function list($where ='', $order='id desc') {
         $list = [];
         $list = Db::name('cates')
+            ->where($where)
             ->order($order)
             ->select()
             ->toArray();
         return $list;
     }
 
-    public static function query($id) {
+    public static function query($id, $where='') {
         $obj = Db::name('cates')
+            ->where($where)
             ->where(["id" => $id])
             ->find();
         return $obj;
@@ -29,6 +31,7 @@ class OnlineCateService {
     */
     public static function addCate($params) {
         $param['name'] = $params['name'];
+        $param['admin_user_id'] = $params['admin_user_id'];
         $insertId = Db::name('cates')->strict(false)->insertGetId($param);
         return $insertId;
     }
